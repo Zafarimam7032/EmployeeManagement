@@ -1,0 +1,21 @@
+server:
+  servlet:
+    context-path: /employee
+  port: 9091
+
+spring:
+  application:
+    name: EmployeeManagement
+  datasource:
+    url: jdbc:mysql://localost:3306/employee
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+    
+  jpa:
+    hibernate:
+      ddl-auto: update  
+    generate-ddl: true
+    show-sql: true
+    
