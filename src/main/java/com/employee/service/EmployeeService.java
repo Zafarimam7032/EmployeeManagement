@@ -10,7 +10,7 @@ public interface EmployeeService {
 
 	public Employee getEmployeeByName(String name);
 
-	public boolean updateEmployee(String empid, Employee employee);
+	public boolean updateEmployee(String emailId, Employee employee);
 
 	public boolean deleteEmployee(String empid);
 

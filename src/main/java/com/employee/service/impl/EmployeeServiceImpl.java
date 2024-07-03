@@ -15,9 +15,9 @@ import com.employee.service.EmployeeService;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-	
-	Logger logger=LoggerFactory.getLogger(this.getClass());
-	
+
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
@@ -26,12 +26,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		logger.info("entered into getmployee");
 		try {
 			List<Employee> employees = employeeRepository.findAll();
-			logger.debug("size of employees",employees.size());
-			if(employees.size()>0) {
+			logger.debug("size of employees", employees.size());
+			if (employees.size() > 0) {
 				return employees;
 			}
-		}catch (Exception e) {
-			logger.error("unable to find all employees",e.getMessage());
+		} catch (Exception e) {
+			logger.error("unable to find all employees", e.getMessage());
 			throw new BussinessException("unable to find all employees", e.getMessage(), LocalDate.now());
 		}
 		logger.info("exit into getmployee");
@@ -43,12 +43,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		logger.info("entered into getEmployeeByName");
 		try {
 			Employee employees = employeeRepository.findByEmployeeName(name);
-			logger.debug("employees",employees);
-			if(employees!=null) {
+			logger.debug("employees", employees);
+			if (employees != null) {
 				return employees;
 			}
-		}catch (Exception e) {
-			logger.error("unable to find getEmployeeByName",e.getMessage());
+		} catch (Exception e) {
+			logger.error("unable to find getEmployeeByName", e.getMessage());
 			throw new BussinessException("unable to find getEmployeeByName", e.getMessage(), LocalDate.now());
 		}
 		logger.info("exit into getEmployeeByName");
@@ -56,20 +56,47 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public boolean updateEmployee(String empid, Employee employee) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateEmployee(String emailId, Employee employee) {
+		logger.info("entered into updateEmployee");
+		boolean check = false;
+		try {
+			if (emailId != null) {
+				Employee employee2 = employeeRepository.findByEmailId(emailId);
+				if (employee2 != null) {
+					employee2.setEmployeeName(employee.getEmployeeName() != null ? employee.getEmployeeName()
+							: employee2.getDepartmentName());
+					employee2
+							.setAddress(employee.getAddress() != null ? employee.getAddress() : employee2.getAddress());
+					employee2.setDepartmentName(employee.getDepartmentName() != null ? employee.getDepartmentName()
+							: employee2.getDepartmentName());
+					employee2
+							.setEmailId(employee.getEmailId() != null ? employee.getEmailId() : employee2.getEmailId());
+					employee2.setPhoneNumber(
+							employee.getPhoneNumber() != null ? employee.getPhoneNumber() : employee2.getPhoneNumber());
+					employee2.setSalry(employee.getSalry() > 0 ? employee.getSalry() : employee2.getSalry());
+					Employee savedEmployee = employeeRepository.save(employee2);
+					if (savedEmployee != null) {
+						check = true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			logger.error("unable to find updateEmployee", e.getMessage());
+			throw new BussinessException("unable to find updateEmployee", e.getMessage(), LocalDate.now());
+		}
+		logger.info("exit into updateEmployee");
+		return check;
 	}
 
 	@Override
 	public boolean deleteEmployee(String employeeName) {
 		logger.info("entered into getEmployeeByName");
-		boolean check= false;
+		boolean check = false;
 		try {
-			 employeeRepository.deleteByEmployeeName(employeeName);
-			 check =true;
-		}catch (Exception e) {
-			logger.error("unable to find getEmployeeByName",e.getMessage());
+			employeeRepository.deleteByEmployeeName(employeeName);
+			check = true;
+		} catch (Exception e) {
+			logger.error("unable to find getEmployeeByName", e.getMessage());
 			throw new BussinessException("unable to find getEmployeeByName", e.getMessage(), LocalDate.now());
 		}
 		logger.info("exit into getEmployeeByName");
@@ -81,8 +108,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		logger.info("entered into addEmployee");
 		try {
 			employeeRepository.save(employee);
-		}catch (Exception e) {
-			logger.error("unable to addEmployee",e.getMessage());
+		} catch (Exception e) {
+			logger.error("unable to addEmployee", e.getMessage());
 			throw new BussinessException("unable to  addEmployee", e.getMessage(), LocalDate.now());
 		}
 		logger.info("exit into addEmployee");

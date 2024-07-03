@@ -11,5 +11,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	public Employee  findByEmployeeName(String employeeName);
 	
 	public void deleteByEmployeeName(String employeeName);
+	
+	public Employee  findByEmailId(String emailId);
 
 }
