@@ -42,10 +42,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee getEmployeeByName(String name) {
 		logger.info("entered into getEmployeeByName");
 		try {
-			Employee employees = employeeRepository.findByEmployeeName(name);
+			List<Employee> employees = employeeRepository.findByEmployeeName(name);
 			logger.debug("employees", employees);
-			if (employees != null) {
-				return employees;
+			if (employees.size() >0) {
+				return employees.get(0);
 			}
 		} catch (Exception e) {
 			logger.error("unable to find getEmployeeByName", e.getMessage());
@@ -61,7 +61,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		boolean check = false;
 		try {
 			if (emailId != null) {
-				Employee employee2 = employeeRepository.findByEmailId(emailId);
+				List<Employee> employees = employeeRepository.findByEmailId(emailId);
+				Employee employee2 = employees.get(0);
 				if (employee2 != null) {
 					employee2.setEmployeeName(employee.getEmployeeName() != null ? employee.getEmployeeName()
 							: employee2.getDepartmentName());
