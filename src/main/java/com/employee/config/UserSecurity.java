@@ -28,6 +28,9 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
+	
+	@Autowired
+	private JwtRequestFilter filter;
 
 
 	@Override
@@ -36,24 +39,18 @@ public class UserSecurity extends WebSecurityConfigurerAdapter {
 		.cors().disable()
 		.authorizeRequests()
 		.antMatchers("/token").permitAll()
-		.antMatchers("/v1/user/username/*").permitAll()
-		.antMatchers("/v1/user/username/token/*").permitAll()
-		.antMatchers("/v1/registration").permitAll()
-		.antMatchers("/v1/hello").hasAnyRole("USER")
-		.antMatchers("/v1/update/user/accountnonexpired").hasAnyRole("ADMIN")
-		.antMatchers("/v1/update/user/accountNonLocked").hasAnyRole("ADMIN")
-		.antMatchers("/v1/update/user/credentialsNonExpired").hasAnyRole("ADMIN")
-		.antMatchers("/v1/update/user/accountEnable").hasAnyRole("ADMIN")
-		.antMatchers("/v1/update/user/role").hasAnyRole("ADMIN")
-		.antMatchers("/v1/remove/user/role").hasAnyRole("ADMIN")
-		.antMatchers("/v1/add/user/role").hasAnyRole("ADMIN")
+		.antMatchers("/v1/employee/get/all").hasAnyRole("ADMIN")
+		.antMatchers("/v1/employee/get/*").hasAnyRole("ADMIN")
+		.antMatchers("/v1/employee/update/*").hasAnyRole("ADMIN")
+		.antMatchers("/v1/employee/delete/*").hasAnyRole("ADMIN")
+		.antMatchers("/v1/employee/add").hasAnyRole("ADMIN")
         .antMatchers(HttpMethod.OPTIONS).permitAll()
 		.anyRequest()
 		.authenticated()
 		.and()
 		.sessionManagement().
 		sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//		http.addFilterBefore(filter,UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(filter,UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override

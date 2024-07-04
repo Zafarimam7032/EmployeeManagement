@@ -4,8 +4,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class JwtRequest {
-
+public class JwtRequest{
 	@JsonProperty("username")
 	private String username;
 	@JsonProperty("password")
@@ -47,6 +46,17 @@ public class JwtRequest {
 	@Override
 	public String toString() {
 		return "JwtRequest [username=" + username + ", password=" + password + "]";
+	}
+
+	public JwtRequest(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
+	public JwtRequest() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }

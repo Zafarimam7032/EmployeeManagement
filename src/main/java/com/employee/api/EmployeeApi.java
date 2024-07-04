@@ -21,7 +21,7 @@ public interface EmployeeApi {
 	@GetMapping(path = "/get/{name}")
 	public ResponseEntity<Employee> getEmployeeByName(@PathVariable("name") String name);
 
-	@PutMapping(path = "update/{empid}")
+	@PutMapping(path = "/update/{empid}")
 	public ResponseEntity<Object> updateEmployee(@PathVariable("empid") String empid,@RequestBody Employee employee);
 
 	@DeleteMapping(path = "/delete/{empid}")

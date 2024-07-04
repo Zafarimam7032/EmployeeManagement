@@ -15,7 +15,7 @@ import com.employee.entity.Employee;
 import com.employee.service.EmployeeService;
 
 @RestController
-@RequestMapping(path = "/v1")
+@RequestMapping(path = "/v1/employee")
 public class EmployeeController implements EmployeeApi {
 
 	Logger logger = LoggerFactory.getLogger(EmployeeController.class);

@@ -96,6 +96,21 @@ public class Employee {
 		return "Employee [employeeName=" + employeeName + ", address=" + address + ", emailId=" + emailId
 				+ ", phoneNumber=" + phoneNumber + ", salry=" + salry + ", departmentName=" + departmentName + "]";
 	}
+	public Employee( String employeeName, String address, String emailId, String phoneNumber, double salry,
+			String departmentName) {
+		super();
+		
+		this.employeeName = employeeName;
+		this.address = address;
+		this.emailId = emailId;
+		this.phoneNumber = phoneNumber;
+		this.salry = salry;
+		this.departmentName = departmentName;
+	}
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	 
 
