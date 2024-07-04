@@ -23,10 +23,9 @@ public class CommandRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User dbUser = userRepository.findById(1L).orElse(null);
-		if(Objects.nonNull(dbUser)) {
-			userRepository.deleteById(1L);
-		}
+		User dbUser = userRepository.findByuserName("admin");
+		if(dbUser==null) {
+	
 		User user=new User();
 		user.setUserName("admin");
 		user.setPassword(security.passwordEncoder().encode("admin"));
@@ -37,6 +36,7 @@ public class CommandRunner implements CommandLineRunner {
 		user.setEnabled(Boolean.TRUE);
 		user.setUserRole(Arrays.asList(UserRole.ROLE_ADMIN.getUserRole()));
 		userRepository.save(user);
+		}
 
 	}
 
